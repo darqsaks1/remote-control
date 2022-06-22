@@ -3,7 +3,7 @@ import { httpServer } from "./src/http_server/index";
 // import robot from "robotjs";
 import { WebSocketServer } from "ws";
 import "dotenv/config";
-import { mouseController } from "./src/controllers";
+import { mouseController, drawController } from "./src/controllers";
 import { drawEvents, moveEvents } from "./src/utils";
 const PORT: number | string = process.env.PORT || 3000;
 const WEB_SOCKET_PORT: number | string = process.env.WEB_SOCKET_PORT || 8000;
@@ -17,6 +17,8 @@ wss.on("connection", (ws) => {
     const printedAction: string = buffered && buffered.split(" ").shift()!;
     if (moveEvents.includes(printedAction)) {
       mouseController(buffered, printedAction);
+    } else if (drawEvents.includes(printedAction)) {
+      drawController(buffered, printedAction);
     }
     console.log("message", buffered);
     ws.send(buffered);

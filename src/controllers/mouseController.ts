@@ -1,22 +1,18 @@
 import * as robot from "robotjs";
 import { moveEvents } from "../utils";
-
-type TCoordinates = {
-  x: number;
-  y: number;
-};
+import { TCoordinates } from "../types";
 
 export const mouseController = (message: string, event: string) => {
-  let moveSize: string = message.split(" ").pop()!;
+  let size: string = message.split(" ").pop()!;
   const [up, left, down] = moveEvents;
   const coordinates: TCoordinates = robot.getMousePos();
   if (event === up) {
-    robot.moveMouse(coordinates.x, coordinates.y - +moveSize);
+    robot.moveMouse(coordinates.x, coordinates.y - +size);
   } else if (event === left) {
-    robot.moveMouse(coordinates.x - +moveSize, coordinates.y);
+    robot.moveMouse(coordinates.x - +size, coordinates.y);
   } else if (event === down) {
-    robot.moveMouse(coordinates.x, coordinates.y + +moveSize);
+    robot.moveMouse(coordinates.x, coordinates.y + +size);
   } else {
-    robot.moveMouse(coordinates.x + +moveSize, coordinates.y);
+    robot.moveMouse(coordinates.x + +size, coordinates.y);
   }
 };
