@@ -1,12 +1,14 @@
-import { TCoordinates } from "../../types";
 import * as robot from "robotjs";
+import { onGetMousePosition } from "./../../utils/index";
 
-export const drawRectangle = (radius: number) => {
-  const coordinates: TCoordinates = robot.getMousePos();
-  for (let i = 0; i <= Math.PI * 2; i += 0.01) {
-    const x: number = coordinates.x + radius * Math.cos(i);
-    const y: number = coordinates.y + radius * Math.sin(i);
-    robot.dragMouse(x, y);
-    robot.mouseClick();
-  }
+export const drawRectangle = (message: string): void  => {
+  const { x, y } = onGetMousePosition();
+  const rectangletX = +message.split(" ")[1];
+  const rectangleY = +message.split(" ")[2];
+  robot.mouseToggle("down");
+  robot.moveMouseSmooth(x + rectangletX, y);
+  robot.moveMouseSmooth(x + rectangletX, y + rectangleY);
+  robot.moveMouseSmooth(x, y + rectangleY);
+  robot.moveMouseSmooth(x, y);
+  robot.mouseToggle("up");
 };

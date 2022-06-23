@@ -1,18 +1,23 @@
 import * as robot from "robotjs";
 import { moveEvents } from "../utils";
-import { TCoordinates } from "../types";
+import { onGetMousePosition } from "./../utils/index";
 
-export const mouseController = (message: string, event: string) => {
-  let size: string = message.split(" ").pop()!;
+export const mouseController = (message: string, event: string): void => {
+  const size: string = message.split(" ").pop()!;
   const [up, left, down] = moveEvents;
-  const coordinates: TCoordinates = robot.getMousePos();
-  if (event === up) {
-    robot.moveMouse(coordinates.x, coordinates.y - +size);
-  } else if (event === left) {
-    robot.moveMouse(coordinates.x - +size, coordinates.y);
-  } else if (event === down) {
-    robot.moveMouse(coordinates.x, coordinates.y + +size);
-  } else {
-    robot.moveMouse(coordinates.x + +size, coordinates.y);
+  const { x, y } = onGetMousePosition();
+  switch (event) {
+    case up:
+      robot.moveMouse(x, y - +size);
+      break;
+    case left:
+      robot.moveMouse(x - +size, y);
+      break;
+    case down:
+      robot.moveMouse(x, y + +size);
+      break;
+    default:
+      robot.moveMouse(x + +size, y);
+      break;
   }
 };

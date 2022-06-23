@@ -1,15 +1,21 @@
 import { drawSquare, drawCircle, drawRectangle } from "./draw";
 import { drawEvents } from "../utils";
 
-export const drawController = async (message: string, event: string) => {
+export const drawController = (message: string, event: string): void => {
   const [circle, rectangle, square] = drawEvents;
   const radius: number | string =
     (event !== rectangle && message.split(" ").pop()!) || 0;
-  if (event === circle) {
-    drawCircle(+radius);
-  } else if (event === square) {
-    drawSquare(+radius);
-  } else {
-    drawRectangle(+rectangle);
+  switch (event) {
+    case circle:
+      drawCircle(+radius);
+      break;
+    case rectangle:
+      drawRectangle(message);
+      break;
+    case square:
+      drawSquare(+radius);
+      break;
+    default:
+      break;
   }
 };
