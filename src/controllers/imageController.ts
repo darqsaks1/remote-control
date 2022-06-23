@@ -8,13 +8,11 @@ import {
 
 export const imageController = (ws: any): void => {
   const { x, y } = onGetMousePosition();
-  const mouseX: number = x - PRINT_SCREEN_NUMBERS.CURRENT_MOUSE_POSITION;
-  const mouseY: number = y - PRINT_SCREEN_NUMBERS.CURRENT_MOUSE_POSITION;
   new Jimp(
     {
       data: robot.screen.capture(
-        mouseX,
-        mouseY,
+        x - PRINT_SCREEN_NUMBERS.CURRENT_MOUSE_POSITION,
+        y - PRINT_SCREEN_NUMBERS.CURRENT_MOUSE_POSITION,
         PRINT_SCREEN_NUMBERS.IMAGE_FIGURE_CAPTURE,
         PRINT_SCREEN_NUMBERS.IMAGE_FIGURE_CAPTURE
       ).image,
