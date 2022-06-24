@@ -14,7 +14,6 @@ export const moveEvents: string[] = [
   "mouse_right",
 ];
 
-export const IMAGE_DECODE = "base64";
 export const onGetMousePosition = () => {
   const coordinates: TCoordinates = robot.getMousePos();
   return coordinates;
@@ -30,4 +29,16 @@ export const PRINT_SCREEN_NUMBERS: TPrintScreenNumbers = {
   IMAGE_FIGURE_CAPTURE: 200,
 };
 
+export const onGetJimpData = (): void => {
+  const { x, y } = onGetMousePosition();
+  return robot.screen.capture(
+    x - PRINT_SCREEN_NUMBERS.CURRENT_MOUSE_POSITION,
+    y - PRINT_SCREEN_NUMBERS.CURRENT_MOUSE_POSITION,
+    PRINT_SCREEN_NUMBERS.IMAGE_FIGURE_CAPTURE,
+    PRINT_SCREEN_NUMBERS.IMAGE_FIGURE_CAPTURE
+  ).image;
+};
+
 export const PRINT_SCREEN = "prnt_scrn";
+
+export const IMAGE_DECODE = "base64";

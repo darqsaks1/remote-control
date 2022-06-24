@@ -1,21 +1,14 @@
-import * as robot from "robotjs";
 import Jimp from "jimp";
 import {
   IMAGE_DECODE,
-  onGetMousePosition,
+  onGetJimpData,
   PRINT_SCREEN_NUMBERS,
 } from "./../utils/index";
 
 export const imageController = (ws: any): void => {
-  const { x, y } = onGetMousePosition();
   new Jimp(
     {
-      data: robot.screen.capture(
-        x - PRINT_SCREEN_NUMBERS.CURRENT_MOUSE_POSITION,
-        y - PRINT_SCREEN_NUMBERS.CURRENT_MOUSE_POSITION,
-        PRINT_SCREEN_NUMBERS.IMAGE_FIGURE_CAPTURE,
-        PRINT_SCREEN_NUMBERS.IMAGE_FIGURE_CAPTURE
-      ).image,
+      data: onGetJimpData(),
       width: PRINT_SCREEN_NUMBERS.IMAGE_FIGURE_CAPTURE,
       height: PRINT_SCREEN_NUMBERS.IMAGE_FIGURE_CAPTURE,
     },
@@ -23,19 +16,13 @@ export const imageController = (ws: any): void => {
       if (err) {
         throw err;
       } else {
-        picture.getBuffer(
-          Jimp.MIME_PNG,
-          (err: Error, string: string) => {
-            if (err) {
-              throw err;
-            } else {
-              ws.send(
-                `prnt_scrn ${Buffer.from(string).toString(IMAGE_DECODE)}`
-              );
-              console.log(`message prnt_scrn`);
-            }
+        picture.getBuffer(Jimp.MIME_PNG, (err: Error, string: string) => {
+          if (err) {
+            throw err;
+          } else {
+            ws.send(`prnt_scrn ${Buffer.from(string).toString(IMAGE_DECODE)}`);
           }
-        );
+        });
       }
     }
   );
