@@ -23,7 +23,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PRINT_SCREEN = exports.PRINT_SCREEN_NUMBERS = exports.HTTP_STATUS = exports.onGetMousePosition = exports.IMAGE_DECODE = exports.moveEvents = exports.drawEvents = void 0;
+exports.IMAGE_DECODE = exports.PRINT_SCREEN = exports.onGetJimpData = exports.PRINT_SCREEN_NUMBERS = exports.HTTP_STATUS = exports.onGetMousePosition = exports.moveEvents = exports.drawEvents = void 0;
 const robot = __importStar(require("robotjs"));
 exports.drawEvents = [
     "draw_circle",
@@ -36,7 +36,6 @@ exports.moveEvents = [
     "mouse_down",
     "mouse_right",
 ];
-exports.IMAGE_DECODE = "base64";
 const onGetMousePosition = () => {
     const coordinates = robot.getMousePos();
     return coordinates;
@@ -50,4 +49,10 @@ exports.PRINT_SCREEN_NUMBERS = {
     CURRENT_MOUSE_POSITION: 100,
     IMAGE_FIGURE_CAPTURE: 200,
 };
+const onGetJimpData = () => {
+    const { x, y } = (0, exports.onGetMousePosition)();
+    return robot.screen.capture(x - exports.PRINT_SCREEN_NUMBERS.CURRENT_MOUSE_POSITION, y - exports.PRINT_SCREEN_NUMBERS.CURRENT_MOUSE_POSITION, exports.PRINT_SCREEN_NUMBERS.IMAGE_FIGURE_CAPTURE, exports.PRINT_SCREEN_NUMBERS.IMAGE_FIGURE_CAPTURE).image;
+};
+exports.onGetJimpData = onGetJimpData;
 exports.PRINT_SCREEN = "prnt_scrn";
+exports.IMAGE_DECODE = "base64";
