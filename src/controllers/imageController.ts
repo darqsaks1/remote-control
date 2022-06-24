@@ -24,7 +24,7 @@ export const imageController = (ws: any): void => {
         throw err;
       } else {
         picture.getBuffer(
-          Jimp.PNG_FILTER_AUTO,
+          Jimp.MIME_PNG,
           (err: Error, string: string) => {
             if (err) {
               throw err;
